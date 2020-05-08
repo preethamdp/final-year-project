@@ -6,39 +6,51 @@ import router from './router';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    accessToken: null,
-    loggingIn: false,
-    loginError: null
-  },
-  mutations: {
-    loginStart: state => state.loggingIn = true,
-    loginStop: (state, errorMessage) => {
-      state.loggingIn = false;
-      state.loginError = errorMessage;
+    state: {
+        accessToken: localStorage.accessToken || null,
+        loggingIn: false,
+        loginError: null,
+        fetchingStuff:false,
+        fetchingError:null,
+        allEvents:null,
+      },
+      mutations: {
+        loginStart: state => state.loggingIn = true,
+        loginStop: (state, errorMessage) => {
+          state.loggingIn = false;
+          state.loginError = errorMessage;
+        },
+        updateAccessToken: (state, accessToken) => {
+          state.accessToken = accessToken;
+        },
+        logout: (state) => {
+          state.accessToken = null;
+        },
+        fetchingStart:state => state.fetchingStuff = true,
+        fetchingStop:(state,errorMessage) => {
+            state.fetchingStuff = false;
+            state.fetchingError = errorMessage;
+        },
+        updateAllEvents: (state,allEvents) => {
+            state.allEvents = allEvents;
+        }
     },
-    updateAccessToken: (state, accessToken) => {
-      state.accessToken = accessToken;
-    },
-    logout: (state) => {
-      state.accessToken = null;
-    }
-  },
   actions: {
     doLogin({ commit }, loginData) {
       commit('loginStart');
-
-      axios.post('https://reqres.in/api/login', {
+        console.log("logging in")
+      axios.post('https://liveseminar-backend.herokuapp.com/login', {
         ...loginData
       })
       .then(response => {
         localStorage.setItem('accessToken', response.data.token);
+        // localStorage.setItem('data')
         commit('loginStop', null);
         commit('updateAccessToken', response.data.token);
-        router.push('/users');
+        router.push('/about');
       })
       .catch(error => {
-        commit('loginStop', error.response.data.error);
+        commit('loginStop', error);
         commit('updateAccessToken', null);
       })
     },
@@ -48,7 +60,34 @@ export default new Vuex.Store({
     logout({ commit }) {
       localStorage.removeItem('accessToken');
       commit('logout');
-      router.push('/login');
+      router.push('/signin');
+    },
+    fetchingAllEvents({ commit }){
+        commit('fetchingStart');
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTk0Y2ZiMWNjYzk1NTAwMTcyOGEyODgiLCJmaXJzdE5hbWUiOiJ0ZXN0MSIsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNTg4NTkwNzk0LCJleHAiOjE2MjAxMjY3OTR9.gy8Okwo4o6Ucpz2_xHDMJSLh5ca1yD_eRCIGeS62YT4");
+
+        var requestOptions = {
+        headers: myHeaders
+        };
+
+        
+        // axios.get('https://liveseminar-backend.herokuapp.com/alleventdetails',{
+        //     ...body
+        // })
+        fetch("https://liveseminar-backend.herokuapp.com/alleventdetails", requestOptions)
+        .then(data => {return data.json()})
+        .then(response => {
+            commit('fetchingStop', null);
+            let r =  response
+            console.log(r)
+            commit('updateAllEvents', r);
+        })
+          .catch(error => { 
+            commit('fetchingStop', error);
+            commit('updateAllEvents', null);
+          })
     }
-  }
+    }
 })

@@ -27,11 +27,7 @@
 
 <script>
 export default {
-    mounted(){
-        let tmp = 'none'
-        document.getElementsByClassName('container')[0].style.display = tmp
-        document.getElementsByClassName('navbar')[0].style.display = tmp
-    }
+
 
 }
 </script>
@@ -40,6 +36,9 @@ export default {
 /* .container,.navbar{
     display:none;
 } */
+body{
+    overflow: hidden;
+}
 .signup{
 padding: 1rem;
 z-index:0;
@@ -75,7 +74,7 @@ position: relative;
     outline:none;
     appearance: none;
     color:rgb(0, 0, 0);
-    background-color:rgb(255, 154, 154);
+    background-color:#fff;
     border-bottom: 2px solid rgb(0, 0, 0);
     padding: 0 0 6px 0;
     margin: 0 0 2.5rem 0;
@@ -83,7 +82,7 @@ position: relative;
     padding: 0 0 0.75rem 0;
 }
 .signup .continue-btn{
-    padding:3px 24px 3px 24px;
+    padding:5px 30px 5px 30px;
     width:fit-content;
     color:#FFF;
     float:right;

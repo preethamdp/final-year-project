@@ -1,8 +1,11 @@
 <template>
     
   <div class="signin" >
-      
-      <div class="checker"  v-if="this.token == ''">
+      <div v-if="loggingIn" class="loading">
+      <img src="./../assets/loading1.gif" alt="Loading Icon">
+    </div>
+        <div v-if="loginError">{{loginError}}</div>
+      <div class="checker"  v-if="accessToken == null">
       <div class="part1">
           <div class="title">
               Seminar
@@ -15,10 +18,10 @@
           </div>
       </div>
       <div class="email-text" >
-          <input type="email" name="" placeholder = "Email address" id="email">
-          <input type="password" name="" placeholder = "Password" id="pwd" @keypress="handleEnter">
+          <input type="email" name="" placeholder = "Email address" id="email" v-model="email">
+          <input type="password" name="" placeholder = "Password" id="pwd" @keypress="handleEnter" v-model="password">
       </div>
-      <div class="continue-btn" @click="login">
+      <div class="continue-btn" @click="loginSubmit">
           Continue
       </div>
       <div class="part2">
@@ -42,10 +45,12 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
     data:()=>{
         return{
-            token:'',
+            email:'',
+            password:'',
             shownav: true,
             auth : false,
             showAlert: false
@@ -53,9 +58,14 @@ export default {
 
     },
     computed:{
-        getToken:()=>{
-        return localStorage.token
-    }
+    //     getToken:()=>{
+    //     return localStorage.token
+    // }
+        ...mapState([
+        'loggingIn',
+        'loginError',
+        'accessToken'
+      ])
     },
     methods:{
         login(){
@@ -103,30 +113,42 @@ export default {
             },
             goHome(){
                 this.$route.push({path:'about'})
-            }
+            },
+            ...mapActions([
+                'doLogin'
+                ]),
+            loginSubmit() {
+                this.doLogin({
+                email: this.email,
+                password: this.password
+                });
+             }
+
 
                 },
-     mounted(){         
-         if(localStorage.token == undefined){
-         this.token = ''
-         }
-         else{
-             this.token = localStorage.token
-         }
-        console.log('mounting');
+    //  mounted(){         
+    //      if(localStorage.token == undefined){
+    //      this.token = ''
+    //      }
+    //      else{
+    //          this.token = localStorage.token
+    //      }
+    //     console.log('mounting');
         
-         let tmp = 'none'
-        document.getElementsByClassName('container')[0].style.display = tmp
-        document.getElementsByClassName('navbar')[0].style.display = tmp
+    //      let tmp = 'none'
+    //     document.getElementsByClassName('container')[0].style.display = tmp
+    //     document.getElementsByClassName('navbar')[0].style.display = tmp
         
-    }
+    // }
 
 
 }
 </script>
 
 <style>
-
+body{
+    overflow: hidden;
+}
 .signin{
 padding: 1rem;
 z-index:0;
@@ -163,7 +185,7 @@ position: relative;
     appearance: none;
     color:rgb(0, 0, 0);
     font-size: 16px;
-    background-color:rgb(255, 154, 154);
+    background-color:#FFF;
     border-bottom: 2px solid rgb(0, 0, 0);
     padding: 0 0 6px 0;
     margin:0 0 1.75rem 0 ;
@@ -247,6 +269,11 @@ position: relative;
     margin-top:30%;
     border:4px solid #fff;
     text-shadow: 1px 2px rgba(0,0,0,0.5)
+}
+.signin .loading img{
+    position:absolute;
+    width:100%;
+    height: 100%;
 }
 
 @media only screen and (min-width: 600px) {

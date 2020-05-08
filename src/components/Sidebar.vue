@@ -13,10 +13,10 @@
     <div class="navigation-links"  @click="showNav">
       <transition-group name="fade">
         <div v-show="showLink" key="1"><router-link to="./">Home</router-link></div>
-        <div v-show="showLink" key="2"><router-link to="./signin">Portfolio</router-link></div>
-        <div v-show="showLink" key="3"><router-link to="./about">About</router-link></div>
-        <!-- <div v-show="showLink" key="4">Contact</div>
-        <div v-show="showLink" key="5">FAQ</div> -->
+        <div v-show="showLink" key="2"><router-link to="./allevents">Events</router-link></div>
+        <div v-show="showLink" key="3"><router-link to="./profile">Portfolio</router-link></div>
+        <div v-show="showLink" key="4"><router-link to="./about">About</router-link></div>
+        <!-- <div v-show="showLink" key="5">FAQ</div> -->
         <div v-show="showLink" key="6" class="signIn" v-if="this.token == false"><a href="./signin">SignIn</a></div>
         <div v-show="showLink" key="7" class="signUp" v-if="this.token == false"><a href="./signup">SignUp</a></div>
         <div v-show="showLink" key="7" class="logout"  v-if="this.token == true" @click="logout"><span id ="logout">Logout</span></div>
@@ -26,17 +26,24 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
   export default {
     data: () => {
       return {
         showSidebar: false,
         showLink: false,
-        token: false
+        token: localStorage.accessToken  || false
       }
+    },
+    computed:{
+      ...mapState([
+        'accessToken'
+      ])
+
     },
     methods: {
       showNav() {
-        if (localStorage.token != undefined){
+        if (this.token != false){
           this.token = true
         }
         else{
@@ -58,10 +65,13 @@
           }, 500);
         }
       },
-      logout(){
-        alert('LogOut successful')
-        localStorage.removeItem('token')
-      }
+      // logout(){
+      //   alert('LogOut successful')
+      //   localStorage.removeItem('token')
+      // },
+      ...mapActions([
+                'logout'
+                ])
     }
   }
 </script>
@@ -186,9 +196,9 @@
 .fade-enter-active:nth-child(3), .fade-leave-active:nth-child(3) {
   transition: transform linear calc(.1s * 3), display 0.5s;
 }
-/* .fade-enter-active:nth-child(4), .fade-leave-active:nth-child(4) {
+.fade-enter-active:nth-child(4), .fade-leave-active:nth-child(4) {
   transition: transform linear calc(.1s * 4), display 0.5s;
-} */
+}
 /* .fade-enter-active:nth-child(5), .fade-leave-active:nth-child(5) {
   transition: transform linear calc(.1s * 5), display 0.5s;
 } */

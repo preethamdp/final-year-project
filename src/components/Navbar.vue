@@ -6,8 +6,11 @@
         <i class="fas fa-search"></i>
         <input type="text" name="" id="search" placeholder="Search" class="search">
          <div class="search-btn">
-        <i class="fas fa-search"></i>
+        <i class="fas fa-search"></i> 
     </div>   
+     </div>
+     <div class="profile-pic" @click="goProfile">
+         <img src="./../assets/logo.png" alt="">
      </div>
       
         </div>
@@ -15,6 +18,8 @@
 </template>
 
 <script>
+
+import router from './../router';
 export default {
     data:() => {
         return{
@@ -31,8 +36,11 @@ export default {
         expand(){
             if (screen.width < 500){
             document.getElementsByClassName('title-wrap')[0].style.display = 'none'
-            document.getElementsByClassName('search-box')[0].style.width = '70%'
+            document.getElementsByClassName('search-box')[0].style.width = '75%'
             }
+        },
+        goProfile(){
+            router.push('./profile')
         }
     }
 }
@@ -51,18 +59,19 @@ export default {
     height: 3rem;
 
 }
-.title-wrap,.search-box,.search-btn{
+.title-wrap,.search-box,.search-btn,.profile-pic{
     display: inline;
 }
 .title-wrap{
     position: relative;
     width:40%;
-    top:10px;
+    top:6px;
     margin-left:45px;
     font-size: 24px;
     font-weight: 600;
     color:#000;
     text-shadow: 1px 3px rgba(255,255,255,0.2);
+    
 }
 .navbar.search-wrap{
     position: relative;
@@ -72,7 +81,7 @@ export default {
     width:50%;
     position: absolute;
     height: 2rem;
-    right: 6%;
+    right: 7%;
     top: 0.5rem;
     border:3px solid rgb(46, 46, 46) ;
     color:rgb(63, 63, 63);
@@ -98,6 +107,7 @@ export default {
 .search-box:hover{
     border:3px solid rgb(0, 26, 255);
 }
+
 .navbar .search-wrap .search-btn{
     position:absolute;
     right:-1px;
@@ -108,12 +118,29 @@ export default {
     color:#fff;
     cursor: pointer;
 }
+.navbar .profile-pic{
+    display:none;
+    position:absolute;
+    right:3px;
+    top:-1px;
+    border-radius: 50%;
+    width: 40px;
+    cursor:pointer;
+    
+}
+.navbar .profile-pic img{
+    width:40px;
+    float:right;
+    margin:7px 24px 8px;
+    border-radius:50%;
+    border:2px solid rgb(231, 231, 231)
+}
 .navbar .search-btn:hover{
     background: rgb(0, 26, 255);
     
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 1000px) {
  
   .navbar .search-wrap .search-box{
     width:50%;
@@ -121,6 +148,9 @@ export default {
 .navbar .title-wrap{
     display: block;
 } 
+.navbar .profile-pic{
+    display:block
+}
 }
 
 </style>
