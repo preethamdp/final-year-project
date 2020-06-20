@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-      <div class="title-wrap">Seminar</div>
+      <div class="title-wrap"><router-link to="/">Seminar</router-link></div>
       <div class="search-wrap" @click="expand">
       <div class="search-box" @click="searchFocus">
         <i class="fas fa-search"></i>
@@ -9,8 +9,11 @@
         <i class="fas fa-search"></i> 
     </div>   
      </div>
-     <div class="profile-pic" @click="goProfile">
+     <div class="profile-pic" v-if="profile==null" @click="goProfile">
          <img src="./../assets/logo.png" alt="">
+     </div>
+     <div class="profile-pic" v-else @click="goProfile">
+         <img :src="profile.profilePreviewUrl" alt="">
      </div>
       
         </div>
@@ -18,13 +21,18 @@
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 import router from './../router';
 export default {
     data:() => {
         return{
             d:true,
         }
+    },
+    computed:{
+        ...mapState([
+            'profile'
+        ])
     },
     methods:{
         searchFocus(e){
@@ -40,7 +48,7 @@ export default {
             }
         },
         goProfile(){
-            router.push('./profile')
+            router.push('/profile')
         }
     }
 }
@@ -53,11 +61,14 @@ export default {
     width:100%;
     background-color:#fff;
     text-align: left;
-    box-shadow: 1px 6px rgba(0,0,0,0.5);
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.5);
     position: fixed;
     z-index: 1;
     height: 3rem;
 
+}
+.navbar{
+    background: linear-gradient(to right,rgb(146,12,255),rgb(26,46,255))
 }
 .title-wrap,.search-box,.search-btn,.profile-pic{
     display: inline;
@@ -71,7 +82,16 @@ export default {
     font-weight: 600;
     color:#000;
     text-shadow: 1px 3px rgba(255,255,255,0.2);
+    cursor: pointer;
     
+    
+}
+.title-wrap a{
+    color:#000;
+    text-decoration: none;
+}
+.title-wrap a:hover{
+    text-shadow: 2px 3px 3px rgba(0,0,0,0.5)
 }
 .navbar.search-wrap{
     position: relative;
@@ -92,6 +112,9 @@ export default {
     cursor:text;
    
 }
+.search-box:hover{
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.5)
+}
 .search-box .search{
     position: absolute;
     top:9px;
@@ -105,7 +128,10 @@ export default {
     
 }
 .search-box:hover{
-    border:3px solid rgb(0, 26, 255);
+    border:3px solid rgb(111, 0, 255);
+}
+.search-box,.search-wrap{
+    background-color:#fff
 }
 
 .navbar .search-wrap .search-btn{
@@ -127,6 +153,9 @@ export default {
     width: 40px;
     cursor:pointer;
     
+}
+.navbar .profile-pic img:hover{
+    border-radius:20%;
 }
 .navbar .profile-pic img{
     width:40px;

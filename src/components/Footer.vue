@@ -4,10 +4,10 @@
       <footer class = "foot" v-bind:class="{footer:isActive,footerfix:!isActive}">
           <div class="part1">
               <ul>
-                  <li><router-link to="./">Home</router-link></li>
-                  <li><router-link to="./allevents">Events</router-link></li>
-                  <li><router-link to="./profile">Profile</router-link></li>
-                  <li><router-link to="./about">About</router-link></li>
+                  <li><router-link to="/">Home</router-link></li>
+                  <li><router-link to="/allevents">Events</router-link></li>
+                  <li><router-link to="/profile">Profile</router-link></li>
+                  <li><router-link to="/about">About</router-link></li>
 
               </ul>
           </div>

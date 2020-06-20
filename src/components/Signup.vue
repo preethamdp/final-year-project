@@ -8,7 +8,7 @@
               Sign up
           </div>
           <div class="user-exist">
-              <span class="text">Already have an account? </span><a href="./components/signup.vue" class="create-link">Sign in</a>
+              <span class="text">Already have an account? </span><router-link to='./signin'>Sign in</router-link>
           </div>
       </div>
       <div class="email-text">
@@ -33,12 +33,7 @@ export default {
 </script>
 
 <style>
-/* .container,.navbar{
-    display:none;
-} */
-body{
-    overflow: hidden;
-}
+
 .signup{
 padding: 1rem;
 z-index:0;

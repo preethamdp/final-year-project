@@ -9,7 +9,7 @@
       </div>
       <div class="wrapper" v-if="allEvents!=null">
         <div class="event-list"  v-for="(e,index) in allEvents" v-bind:key="index">
-          <Event v-bind:event="e"  />
+          <Event v-bind:event="e" :ind="index" ></Event>
       </div>
       </div>
       
@@ -61,9 +61,11 @@ export default {
 </script>
 
 
-<style>
-html,body{
-    overflow-y:scroll;
+<style >
+.events-container{
+    background-image: url("./../assets/main-bg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 .events{
     margin:3.5rem 0 0 0;
@@ -72,7 +74,7 @@ html,body{
     
 }
 .events .event-list{
-     box-shadow: 4px 8px 8px rgba(0,0,0,0.5);
+     box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
      cursor: pointer;
      
 }
@@ -116,7 +118,7 @@ html,body{
 .home .event-list .card:hover{
     background: #FFF
 } */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 700px) {
   .events{
       width:50%;
       justify-content: center;
@@ -133,6 +135,7 @@ html,body{
       width:95%
   }
 }
+
 
 
 

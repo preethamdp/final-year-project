@@ -12,13 +12,13 @@
     </div> -->
     <div class="navigation-links"  @click="showNav">
       <transition-group name="fade">
-        <div v-show="showLink" key="1"><router-link to="./">Home</router-link></div>
-        <div v-show="showLink" key="2"><router-link to="./allevents">Events</router-link></div>
-        <div v-show="showLink" key="3"><router-link to="./profile">Portfolio</router-link></div>
-        <div v-show="showLink" key="4"><router-link to="./about">About</router-link></div>
+        <div v-show="showLink" key="1"><router-link to="/">Home</router-link></div>
+        <div v-show="showLink" key="2"><router-link to="/allevents">Events</router-link></div>
+        <div v-show="showLink" key="3"><router-link to="/profile">Portfolio</router-link></div>
+        <div v-show="showLink" key="4"><router-link to="/about">About</router-link></div>
         <!-- <div v-show="showLink" key="5">FAQ</div> -->
-        <div v-show="showLink" key="6" class="signIn" v-if="this.token == false"><a href="./signin">SignIn</a></div>
-        <div v-show="showLink" key="7" class="signUp" v-if="this.token == false"><a href="./signup">SignUp</a></div>
+        <div v-show="showLink" key="6" class="signIn" v-if="this.token == false"><a href="/signin">SignIn</a></div>
+        <div v-show="showLink" key="7" class="signUp" v-if="this.token == false"><a href="/signup">SignUp</a></div>
         <div v-show="showLink" key="7" class="logout"  v-if="this.token == true" @click="logout"><span id ="logout">Logout</span></div>
       </transition-group>
     </div>
@@ -94,8 +94,12 @@ import { mapState, mapActions } from 'vuex';
   width:30px;
   margin-bottom: 10px;
   position: fixed;
+  
 
 
+}
+.container .control i:hover{
+  color:rgb(0, 60, 255)
 }
 .container .control i {
   font-size: 2rem;
@@ -104,9 +108,10 @@ import { mapState, mapActions } from 'vuex';
   transition: all 0.5s ease-in-out;
 }
 .container.show {
-  background-color: rgb(255, 255, 255);
+  background-color: #fc4a1a;
   width: 100%;
   height: 100vh;
+  transition: all 0.5s ease-in-out;
 }
 .container.show .control > i {
   color: rgb(0, 0, 0);

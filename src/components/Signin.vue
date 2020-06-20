@@ -14,7 +14,7 @@
               Sign in
           </div>
           <div class="new-user">
-              <span class="text">New user? </span><a href="./components/signin.vue" class="create-link">Create an account</a>
+              <span class="text">New user? </span><router-link to='./signup'>Create an account</router-link>
           </div>
       </div>
       <div class="email-text" >
@@ -146,9 +146,7 @@ export default {
 </script>
 
 <style>
-body{
-    overflow: hidden;
-}
+
 .signin{
 padding: 1rem;
 z-index:0;
@@ -275,7 +273,13 @@ position: relative;
     width:100%;
     height: 100%;
 }
+.signin .loading{
+    background-color:rgba(255,255,255,0.25);
+    background-attachment:fixed;
+    background-position: center;
+    background-size: cover;
 
+}
 @media only screen and (min-width: 600px) {
   .signin{
       width:40%;

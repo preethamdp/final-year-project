@@ -40,9 +40,6 @@
     color: rgba(0, 47, 255, 0.801);
     width: 100%;
     min-height: 100vh;
-    // background: url('./assets/app_bg.jpg') center center;
-    // background-size: cover;
-    // overflow: scroll;
     background-color: rgb(255, 255, 255);
   }
   .title-box{

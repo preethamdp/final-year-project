@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         accessToken: localStorage.accessToken || null,
+        profile: localStorage.profile === undefined ? null : JSON.parse(localStorage.profile),
         loggingIn: false,
         loginError: null,
         fetchingStuff:false,
@@ -23,8 +24,12 @@ export default new Vuex.Store({
         updateAccessToken: (state, accessToken) => {
           state.accessToken = accessToken;
         },
+        updateProfile:(state,profile)=>{
+            state.profile = profile;
+        },
         logout: (state) => {
           state.accessToken = null;
+          state.profile = null;
         },
         fetchingStart:state => state.fetchingStuff = true,
         fetchingStop:(state,errorMessage) => {
@@ -44,10 +49,12 @@ export default new Vuex.Store({
       })
       .then(response => {
         localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('profile',JSON.stringify(response.data.user));
         // localStorage.setItem('data')
         commit('loginStop', null);
         commit('updateAccessToken', response.data.token);
-        router.push('/about');
+        commit('updateProfile',response.data.user);
+        router.push('/');
       })
       .catch(error => {
         commit('loginStop', error);
@@ -59,6 +66,8 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('profile');
+      localStorage.clear()
       commit('logout');
       router.push('/signin');
     },

@@ -18,7 +18,6 @@ export default {
 
 <style>
 body{
-    overflow: hidden;
     
     max-height: 100vh;
 }
